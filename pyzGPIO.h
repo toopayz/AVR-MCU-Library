@@ -12,6 +12,8 @@
 #pragma region          Common Macro for BIT manipulation
 
 //  --------------------------------------------------- Bit Manipulation
+/* default Bit maniputation macro is using _BV
+#define _BV(bit)                    (1 &lt;&lt; bit)  */
 #define BIT(x)                      (0x01 << (x))
 #define LONGBIT(x)                  ((unsigned long)0x00000001 << (x))
 
@@ -42,30 +44,43 @@
 //  ***********************************************************************************
 #pragma region          Macro Ready to use for GPIO
 
-//  --------------------------------------------------- Set DDR,Pin as Input or Output
-//  -----   Combination style
-#define SetAsOutput(comb)           COMB_SETBIT(comb)
-#define SetAsInput(comb)            COMB_CLEARBIT(comb)
-//#define SetAsInputPullUp(comb)      SETBIT(PORT, x)
-
-//  -----   DDR + x style
+//  --------------------------------------------------- General: Set as Input or Output
 #define SET_AS_OUTPUT(DDR, x)       SETBIT(DDR, x)
 #define SET_AS_INPUT(DDR, x)        CLEARBIT(DDR, x)
-//#define SET_AS_INP_PULLUP(PORT, DDR, x) SETBIT(PORT, x)
-
-//  -----   Arduino Style
-#define pinMode_Output(DDR, x)      SETBIT(DDR, x)
-#define pinMode_Input(DDR, x)       CLEARBIT(DDR, x)
-//#define pinMode_InputPullUp(DDR, x) (DDR  &= ~(x));
-
-//  --------------------------------------------------- Read PIN
+//#define SET_AS_INP_PULLUP(DDR, x) 
+//  --------------------------------------------------- General: Write Output Pin
 #define SET_HIGH(PORT, x)           SETBIT(PORT, x)
 #define SET_LOW(PORT, x)            CLEARBIT(PORT, x)
 #define SET_TOGGLE(PORT, x)         FLIPBIT(PORT, x)
 #define SET_ON_OFF_ON(PORT, x)      FLIPBIT(PORT, x)
-
+//  --------------------------------------------------- General: Read Pin
 #define IS_HIGH(PIN, x)             CHECKBIT(PIN, x)
 #define IS_LOW(PIN, x)              ~CHECKBIT(PIN, x)
+
+//  --------------------------------------------------- Combination: Set as Input or Output
+#define SetAsOutput(comb)           SETBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+#define SetAsInput(comb)            CLEARBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+//#define SetAsInputPullUp(comb)    
+//  --------------------------------------------------- Combination: Write Output Pin
+#define SetHigh(comb)               SETBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+#define SetLow(comb)                CLEARBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+#define SetToggle(comb)             FLIPBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+#define SetOnOffOn(comb)            FLIPBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+//  --------------------------------------------------- Combination: Read Pin
+#define IsHigh(comb)                CHECKBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+#define isLow(comb)                 ~CHECKBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+
+//  --------------------------------------------------- Arduino: Set as Input or Output
+#define pinMode_Output(comb)        SETBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+#define pinMode_Input(comb)         CLEARBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+//#define pinMode_InputPullUp(comb) 
+//  --------------------------------------------------- Arduino: Write Output Pin
+#define DigitalWrite_High(comb)     SETBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+#define DigitalWrite_Low(comb)      CLEARBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+//  --------------------------------------------------- Arduino: Read Pin
+#define DigitalRead_isHigh(comb)    CHECKBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+#define DigitalRead_isLow(comb)     ~CHECKBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+
 
 #pragma endregion       Macro Ready to use for GPIO
 
