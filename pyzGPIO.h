@@ -30,6 +30,11 @@
 #define CHECKBITMASK(Addr,x)        (Addr &  (x))
 
 //  --------------------------------------------------- Combine Common Macro
+#define COMB_DDR(p, q, r, s)        p
+#define COMB_PORT(p, q, r, s)       q
+#define COMB_PIN(p, q, r, s)        r
+#define COMB_BIT(p, q, r, s)        s
+
 #define VARFROMCOMB(x, y)           x
 #define BITFROMCOMB(x, y)           y
 
@@ -45,45 +50,65 @@
 #pragma region          Macro Ready to use for GPIO
 
 //  --------------------------------------------------- General: Set as Input or Output
-#define SET_AS_OUTPUT(DDR, x)       SETBIT(DDR, x)
-#define SET_AS_INPUT(DDR, x)        CLEARBIT(DDR, x)
-//#define SET_AS_INP_PULLUP(DDR, x) 
+#define SET_AS_OUTPUT(DDR, x)               SETBIT(DDR,   x)
+#define SET_AS_INPUT(DDR, x)                CLEARBIT(DDR, x)
+#define SET_AS_INP_PULLUP(DDR, PORT, x)     CLEARBIT(DDR, x);  \
+                                            SETBIT(PORT,  x);
 //  --------------------------------------------------- General: Write Output Pin
-#define SET_HIGH(PORT, x)           SETBIT(PORT, x)
-#define SET_LOW(PORT, x)            CLEARBIT(PORT, x)
+#define SET_HIGH(PORT, x)           SETBIT(PORT,  x)
+#define SET_LOW(PORT, x)            CLEARBIT(PORT,x)
 #define SET_TOGGLE(PORT, x)         FLIPBIT(PORT, x)
 #define SET_ON_OFF_ON(PORT, x)      FLIPBIT(PORT, x)
 //  --------------------------------------------------- General: Read Pin
-#define IS_HIGH(PIN, x)             CHECKBIT(PIN, x)
+#define IS_HIGH(PIN, x)             CHECKBIT(PIN,  x)
 #define IS_LOW(PIN, x)              ~CHECKBIT(PIN, x)
 
 //  --------------------------------------------------- Combination: Set as Input or Output
-#define SetAsOutput(comb)           SETBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
-#define SetAsInput(comb)            CLEARBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
-//#define SetAsInputPullUp(comb)    
+#define SetAsOutput(comb)           SETBIT(COMB_DDR(comb),      COMB_BIT(comb))
+#define SetAsInput(comb)            CLEARBIT(COMB_DDR(comb),    COMB_BIT(comb))
+#define SetAsInputPullUp(comb)      CLEARBIT(COMB_DDR(comb),    COMB_BIT(comb));  \
+                                    SETBIT(COMB_PORT(comb),     COMB_BIT(comb));
 //  --------------------------------------------------- Combination: Write Output Pin
-#define SetHigh(comb)               SETBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
-#define SetLow(comb)                CLEARBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
-#define SetToggle(comb)             FLIPBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
-#define SetOnOffOn(comb)            FLIPBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+#define SetHigh(comb)               SETBIT(COMB_PORT(comb),     COMB_BIT(comb))
+#define SetLow(comb)                CLEARBIT(COMB_PORT(comb),   COMB_BIT(comb))
+#define SetToggle(comb)             FLIPBIT(COMB_PORT(comb),    COMB_BIT(comb))
+#define SetOnOffOn(comb)            FLIPBIT(COMB_PORT(comb),    COMB_BIT(comb))
 //  --------------------------------------------------- Combination: Read Pin
-#define IsHigh(comb)                CHECKBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
-#define isLow(comb)                 ~CHECKBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+#define IsHigh(comb)                CHECKBIT(COMB_PIN(comb),    COMB_BIT(comb))
+#define isLow(comb)                 ~CHECKBIT(COMB_PIN(comb),   COMB_BIT(comb))
 
 //  --------------------------------------------------- Arduino: Set as Input or Output
-#define pinMode_Output(comb)        SETBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
-#define pinMode_Input(comb)         CLEARBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
-//#define pinMode_InputPullUp(comb) 
+#define pinMode_Output(comb)        SETBIT(COMB_DDR(comb),      COMB_BIT(comb))
+#define pinMode_Input(comb)         CLEARBIT(COMB_DDR(comb),    COMB_BIT(comb))
+#define pinMode_InputPullUp(comb)   CLEARBIT(COMB_DDR(comb),    COMB_BIT(comb));  \
+                                    SETBIT(COMB_PORT(comb),     COMB_BIT(comb));
 //  --------------------------------------------------- Arduino: Write Output Pin
-#define DigitalWrite_High(comb)     SETBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
-#define DigitalWrite_Low(comb)      CLEARBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+#define DigitalWrite_High(comb)     SETBIT(COMB_PORT(comb),     COMB_BIT(comb))
+#define DigitalWrite_Low(comb)      CLEARBIT(COMB_PORT(comb),   COMB_BIT(comb))
+#define DigitalWrite_Toggle(comb)   FLIPBIT(COMB_PORT(comb),    COMB_BIT(comb))
+#define DigitalWrite_OnOffOn(comb)  FLIPBIT(COMB_PORT(comb),    COMB_BIT(comb))
 //  --------------------------------------------------- Arduino: Read Pin
-#define DigitalRead_isHigh(comb)    CHECKBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
-#define DigitalRead_isLow(comb)     ~CHECKBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
+#define DigitalRead_isHigh(comb)    CHECKBIT(COMB_PIN(comb),    COMB_BIT(comb))
+#define DigitalRead_isLow(comb)     ~CHECKBIT(COMB_PIN(comb),   COMB_BIT(comb))
 
 
 #pragma endregion       Macro Ready to use for GPIO
 
+/*
+    how to use : Robodyn Mega2560
+    #define BUILT_IN_LED    DDRD,PORTD,PIND,13
+    
+    int main()
+    {
+        pinMode_Output(BUILT_IN_LED);    
+        while(1)
+        {
+            DigitalWrite_High(LED_BUILD_IN);
+            _delay_ms(1000);
+            DigitalWrite_Low(LED_BUILD_IN);
+        }
+    }
+*/
 
 //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #endif      //  _pyzGPIO_H
