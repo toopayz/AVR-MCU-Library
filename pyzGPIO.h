@@ -96,7 +96,7 @@
 
 /*
     how to use : Robodyn Mega2560
-    #define BUILT_IN_LED    DDRD,PORTD,PIND,13
+    #define BUILT_IN_LED    DDRB,PORTB,PINB,7
     
     int main()
     {
