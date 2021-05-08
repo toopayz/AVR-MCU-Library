@@ -9,7 +9,6 @@
 #define _pyzGPIO_H
 
 //  ***********************************************************************************
-#pragma region          Common Macro for BIT manipulation
 
 //  --------------------------------------------------- Bit Manipulation
 /* default Bit maniputation macro is using _BV
@@ -43,11 +42,8 @@
 #define COMB_FLIPBIT(comb)          FLIPBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
 #define COMB_CHECKBIT(comb)         CHECKBIT(VARFROMCOMB(comb), BITFROMCOMB(comb))
 
-#pragma endregion       Common Macro for BIT manipulation
-
 
 //  ***********************************************************************************
-#pragma region          Macro Ready to use for GPIO
 
 //  --------------------------------------------------- General: Set as Input or Output
 #define SET_AS_OUTPUT(DDR, x)               SETBIT(DDR,   x)
@@ -92,7 +88,6 @@
 #define DigitalRead_isLow(comb)     ~CHECKBIT(COMB_PIN(comb),   COMB_BIT(comb))
 
 
-#pragma endregion       Macro Ready to use for GPIO
 
 /*
     how to use : Robodyn Mega2560
