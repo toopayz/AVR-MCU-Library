@@ -71,7 +71,7 @@
 #define SetOnOffOn(comb)            FLIPBIT(COMB_PORT(comb),    COMB_BIT(comb))
 //  --------------------------------------------------- Combination: Read Pin
 #define IsHigh(comb)                CHECKBIT(COMB_PIN(comb),    COMB_BIT(comb))
-#define isLow(comb)                 ~CHECKBIT(COMB_PIN(comb),   COMB_BIT(comb))
+#define IsLow(comb)                 !CHECKBIT(COMB_PIN(comb),   COMB_BIT(comb))
 
 //  --------------------------------------------------- Arduino: Set as Input or Output
 #define pinMode_Output(comb)        SETBIT(COMB_DDR(comb),      COMB_BIT(comb))
@@ -85,9 +85,9 @@
 #define DigitalWrite_OnOffOn(comb)  FLIPBIT(COMB_PORT(comb),    COMB_BIT(comb))
 //  --------------------------------------------------- Arduino: Read Pin
 #define DigitalRead_isHigh(comb)    CHECKBIT(COMB_PIN(comb),    COMB_BIT(comb))
-#define DigitalRead_isLow(comb)     ~CHECKBIT(COMB_PIN(comb),   COMB_BIT(comb))
+#define DigitalRead_isLow(comb)     !CHECKBIT(COMB_PIN(comb),   COMB_BIT(comb))
 
-
+#define _NOP() do { __asm__ __volatile__ ("nop"); } while (0)
 
 /*
     how to use : Robodyn Mega2560

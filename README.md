@@ -13,12 +13,11 @@ Hope it is useful.
 
 //-------------------------------------------------------
 #####Library List :
-1. ![#1589F0]**pyzGPIO**`#1589F0`
-               -![#f03c15]Create based on doc1497.pdf _"AVR035: Efficient C Coding for AVR"_`#f03c15`
-2. ![#1589F0]**pyzUART**`#1589F0`
-               -![#f03c15]http://beaststwo.org/avr-uart/index.shtml`#f03c15`
-			   -To Do : Add UART2 and UART3 function for ATmega2560
+1. pyzGPIO
+...- Create based on doc1497.pdf _"AVR035: Efficient C Coding for AVR"
+2. pyzUART
+...- http://beaststwo.org/avr-uart/index.shtml
+...- To Do : Add UART2 and UART3 function for ATmega2560
 
 
-  
 Thanks...^^...
